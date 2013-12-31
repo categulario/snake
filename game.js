@@ -15,6 +15,7 @@ $(document).ready(function() {
 	var h = Math.floor($("#canvas").height()/10)*10
 	var game_loop //el intervalo
 	var event_queue = [] // una cola para los eventos de movimiento
+	var running = true
 
 	//Lets save the cell width in a variable for easy control
 	var cw = 10
@@ -127,7 +128,7 @@ $(document).ready(function() {
 		for(var i = 0; i < snake_array.length; i++) {
 			var c = snake_array[i]
 			//Lets paint 10px wide cells
-			paint_cell(c.x, c.y)
+			paint_cell(c.x, c.y, i)
 		}
 
 		//Lets paint the food
@@ -138,10 +139,14 @@ $(document).ready(function() {
 	}
 
 	//Lets first create a generic function to paint cells
-	function paint_cell(x, y) {
-		ctx.fillStyle = "#46578B"
+	function paint_cell(x, y, i) {
+		if(i===0) {
+			ctx.fillStyle = "#C68B52"
+		} else {
+			ctx.fillStyle = "#46578B"
+		}
 		ctx.fillRect(x*cw, y*cw, cw, cw)
-		ctx.strokeStyle = "#50F27D"
+		ctx.strokeStyle = "#C0CFFF"
 		ctx.strokeRect(x*cw, y*cw, cw, cw)
 	}
 
@@ -171,6 +176,14 @@ $(document).ready(function() {
 			event_queue.push("right")
 		} else if(key == "40" && last != "up") {
 			event_queue.push("down")
+		} else if(key == '32') {
+			if(running) {
+				clearInterval(game_loop)
+				running = false
+			} else {
+				game_loop = setInterval(paint, interval)
+				running = true
+			}
 		}
 		//The snake is now keyboard controllable
 	})
