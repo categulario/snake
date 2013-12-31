@@ -1,3 +1,12 @@
+Array.prototype.popLeft = function() {
+	// TODO encontrar una mejor forma de hacer esto
+	var val = this.reverse().pop()
+
+	this.reverse()
+
+	return val
+}
+
 $(document).ready(function() {
 	//Canvas stuff
 	var canvas = $("#canvas")[0]
@@ -5,7 +14,7 @@ $(document).ready(function() {
 	var w = Math.floor($("#canvas").width()/10)*10
 	var h = Math.floor($("#canvas").height()/10)*10
 	var game_loop //el intervalo
-	var event_queue // una cola para los eventos de movimiento
+	var event_queue = [] // una cola para los eventos de movimiento
 
 	//Lets save the cell width in a variable for easy control
 	var cw = 10
@@ -49,16 +58,25 @@ $(document).ready(function() {
 
 	//Lets create the food now
 	function create_food() {
-		food = {
-			x: Math.round(Math.random()*(w-cw)/cw),
-			y: Math.round(Math.random()*(h-cw)/cw),
-		}
-		//This will create a cell with x/y between 0-44
-		//Because there are 45(450/10) positions accross the rows and columns
+		// evita poner comida sobre la serpiente
+		do {
+			food = {
+				x: Math.round(Math.random()*(w-cw)/cw),
+				y: Math.round(Math.random()*(h-cw)/cw),
+			}
+		} while(snake_array.filter(function(o){
+			return o.x == food.x && o.y == food.y
+		}).length != 0)
 	}
 
 	//Lets paint the snake now
 	function paint() {
+		// retirar los eventos ahora, si existen
+		var next_event = event_queue.popLeft()
+		if (next_event != undefined) {
+			d = next_event
+		}
+
 		ctx.font = '20px monospace'
 		//To avoid the snake trail we need to paint the BG on every frame
 		//Lets paint the canvas now
@@ -85,13 +103,6 @@ $(document).ready(function() {
 		//Lets add the code for body collision
 		//Now if the head of the snake bumps into its body, the game will restart
 		if(nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx, ny, snake_array)) {
-			//restart game
-			// init()
-			//Lets organize the code a bit now.
-			console.log(d)
-			console.log(snake_array)
-			console.log(nx, ny)
-
 			clearInterval(game_loop)
 		}
 
@@ -149,14 +160,17 @@ $(document).ready(function() {
 	$(document).keydown(function(e) {
 		var key = e.which
 		//We will add another clause to prevent reverse gear
-		if(key == "37" && d != "right"){
-			d = "left"
-		} else if(key == "38" && d != "down") {
-			d = "up"
-		} else if(key == "39" && d != "left") {
-			d = "right"
-		} else if(key == "40" && d != "up") {
-			d = "down"
+
+		var last = event_queue[event_queue.length-1] || d
+
+		if(key == "37" && last != "right"){
+			event_queue.push('left')
+		} else if(key == "38" && last != "down") {
+			event_queue.push("up")
+		} else if(key == "39" && last != "left") {
+			event_queue.push("right")
+		} else if(key == "40" && last != "up") {
+			event_queue.push("down")
 		}
 		//The snake is now keyboard controllable
 	})
@@ -165,17 +179,27 @@ $(document).ready(function() {
 		var x = event.offsetX
 		var y = event.offsetY
 
+		var last = event_queue[event_queue.length-1] || d
+
 		if(y/x >= h/w) { // abajo izquierda
 			if(((-h/w)*x + h -y) >= 0) {
-				d = d == 'right' ? 'right' : 'left'
+				if(last != 'right') {
+					event_queue.push('left')
+				}
 			} else {
-				d = d == 'up' ? 'up' : 'down'
+				if(last != 'up') {
+					event_queue.push('down')
+				}
 			}
 		} else { // arriba derecha
 			if(((-h/w)*x + h -y) >= 0) {
-				d = d == 'down' ? 'down' : 'up'
+				if(last != 'down') {
+					event_queue.push('up')
+				}
 			} else {
-				d = d == 'left' ? 'left' : 'right'
+				if(last != 'left') {
+					event_queue.push('right')
+				}
 			}
 		}
 	});
