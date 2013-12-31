@@ -4,6 +4,8 @@ $(document).ready(function() {
 	var ctx = canvas.getContext("2d")
 	var w = Math.floor($("#canvas").width()/10)*10
 	var h = Math.floor($("#canvas").height()/10)*10
+	var game_loop //el intervalo
+	var event_queue // una cola para los eventos de movimiento
 
 	//Lets save the cell width in a variable for easy control
 	var cw = 10
@@ -57,9 +59,10 @@ $(document).ready(function() {
 
 	//Lets paint the snake now
 	function paint() {
+		ctx.font = '20px monospace'
 		//To avoid the snake trail we need to paint the BG on every frame
 		//Lets paint the canvas now
-		ctx.fillStyle = "white"
+		ctx.fillStyle = "#C0CFFF"
 		ctx.fillRect(0, 0, w, h)
 		ctx.strokeStyle = "black"
 		ctx.strokeRect(0, 0, w, h)
@@ -83,9 +86,13 @@ $(document).ready(function() {
 		//Now if the head of the snake bumps into its body, the game will restart
 		if(nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx, ny, snake_array)) {
 			//restart game
-			init()
+			// init()
 			//Lets organize the code a bit now.
-			return
+			console.log(d)
+			console.log(snake_array)
+			console.log(nx, ny)
+
+			clearInterval(game_loop)
 		}
 
 		//Lets write the code to make the snake eat the food
@@ -121,9 +128,9 @@ $(document).ready(function() {
 
 	//Lets first create a generic function to paint cells
 	function paint_cell(x, y) {
-		ctx.fillStyle = "blue"
+		ctx.fillStyle = "#46578B"
 		ctx.fillRect(x*cw, y*cw, cw, cw)
-		ctx.strokeStyle = "white"
+		ctx.strokeStyle = "#50F27D"
 		ctx.strokeRect(x*cw, y*cw, cw, cw)
 	}
 
@@ -142,10 +149,15 @@ $(document).ready(function() {
 	$(document).keydown(function(e) {
 		var key = e.which
 		//We will add another clause to prevent reverse gear
-		if(key == "37" && d != "right") d = "left"
-		else if(key == "38" && d != "down") d = "up"
-		else if(key == "39" && d != "left") d = "right"
-		else if(key == "40" && d != "up") d = "down"
+		if(key == "37" && d != "right"){
+			d = "left"
+		} else if(key == "38" && d != "down") {
+			d = "up"
+		} else if(key == "39" && d != "left") {
+			d = "right"
+		} else if(key == "40" && d != "up") {
+			d = "down"
+		}
 		//The snake is now keyboard controllable
 	})
 
