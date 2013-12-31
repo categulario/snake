@@ -23,7 +23,7 @@ $(document).ready(function() {
 	var food
 	var score
 
-	var interval = 150
+	var interval = 75
 
 	//Lets create the snake now
 	var snake_array //an array of cells to make up the snake
@@ -83,8 +83,6 @@ $(document).ready(function() {
 		//Lets paint the canvas now
 		ctx.fillStyle = "#C0CFFF"
 		ctx.fillRect(0, 0, w, h)
-		ctx.strokeStyle = "black"
-		ctx.strokeRect(0, 0, w, h)
 
 		//The movement code for the snake to come here.
 		//The logic is simple
@@ -114,6 +112,15 @@ $(document).ready(function() {
 		if(nx == food.x && ny == food.y) {
 			var tail = {x: nx, y: ny}
 			score++
+			$('#score').text(score)
+
+			// incrementar la velocidad
+			// interval -= 25
+			// if(interval > 0){
+			// 	clearInterval(game_loop)
+			// 	setInterval(paint, interval)
+			// }
+
 			//Create new food
 			create_food()
 		} else {
@@ -133,9 +140,6 @@ $(document).ready(function() {
 
 		//Lets paint the food
 		paint_cell(food.x, food.y)
-		//Lets paint the score
-		var score_text = "Score: " + score
-		ctx.fillText(score_text, 5, h-5)
 	}
 
 	//Lets first create a generic function to paint cells
@@ -143,10 +147,11 @@ $(document).ready(function() {
 		if(i===0) {
 			ctx.fillStyle = "#C68B52"
 		} else {
-			ctx.fillStyle = "#46578B"
+			ctx.fillStyle = "#2DAA47"
 		}
 		ctx.fillRect(x*cw, y*cw, cw, cw)
-		ctx.strokeStyle = "#C0CFFF"
+
+		ctx.strokeStyle = "#448A52"
 		ctx.strokeRect(x*cw, y*cw, cw, cw)
 	}
 
@@ -179,9 +184,11 @@ $(document).ready(function() {
 		} else if(key == '32') {
 			if(running) {
 				clearInterval(game_loop)
+				$('#stop-btn').removeClass('pause').addClass('play')
 				running = false
 			} else {
 				game_loop = setInterval(paint, interval)
+				$('#stop-btn').removeClass('play').addClass('pause')
 				running = true
 			}
 		}
@@ -216,5 +223,17 @@ $(document).ready(function() {
 			}
 		}
 	});
+
+	$('#stop-btn').on('click', function(event) {
+		if(running) {
+			clearInterval(game_loop)
+			$(this).removeClass('pause').addClass('play')
+			running = false
+		} else {
+			game_loop = setInterval(paint, interval)
+			$(this).removeClass('play').addClass('pause')
+			running = true
+		}
+	})
 
 });

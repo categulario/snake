@@ -1,8 +1,64 @@
+* {
+	font-family: monospace;
+	font-size: 15px;
+}
+
 body{
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	background-color: #C0CFFF;
 }
-#canvas {
-	border: solid 2px #abc;
+a {
+	text-decoration: none;
+}
+ul.menu {
+	height: 40px;
+	list-style-image: none;
+
+	margin: 0;
+	padding: 0;
+
+	overflow: hidden;
+
+	background-color: #000;
+	color: #ccc;
+}
+ul.menu > li {
+	float: left;
+	height: 40px;
+
+	margin: 0;
+
+	list-style: none;
+
+	overflow: hidden;
+}
+ul.menu .link {
+	height: 30px;
+	min-width: 30px;
+	display: block;
+
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 0px;
+
+	background-position: center center;
+	background-repeat: no-repeat;
+
+	color: #ccc;
+	font-weight: bold;
+}
+.play {
+	background-image: url(img/play_12x16.png);
+}
+.pause {
+	background-image: url(img/pause_12x16.png);
+}
+.reload {
+	background-image: url(img/reload_12x14.png);
+}
+.right {
+	float: right !important;
 }

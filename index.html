@@ -9,13 +9,26 @@
 				var width = $(window).width();
 				var height = $(window).height();
 
-				$('#canvas').attr('width', width-4);
-				$('#canvas').attr('height', height-4);
+				$('#canvas').attr('width', width);
+				$('#canvas').attr('height', height-40);
 			});
 		</script>
 	</head>
 	<body>
 		<!-- Lets make a simple snake game -->
+		<ul class="menu">
+			<li>
+				<a href="#" id="stop-btn" class="link pause">&nbsp;</a>
+			</li>
+			<li>
+				<a href="" class="link reload">
+					&nbsp;
+				</a>
+			</li>
+			<li class="right">
+				<a href="#" class="link">Score: <span id="score">0</span></a>
+			</li>
+		</ul>
 		<canvas id="canvas" width="" height=""></canvas>
 
 		<!-- Jquery -->
