@@ -1,12 +1,8 @@
-Array.prototype.popLeft = function() {
-	// TODO encontrar una mejor forma de hacer esto
-	var val = this.reverse().pop()
-
-	this.reverse()
-
-	return val
-}
-
+/**
+ * the snake logic
+ *
+ * @Categulario
+ */
 $(document).ready(function() {
 	//Canvas stuff
 	var canvas = $("#canvas")[0]
@@ -73,7 +69,7 @@ $(document).ready(function() {
 	//Lets paint the snake now
 	function paint() {
 		// retirar los eventos ahora, si existen
-		var next_event = event_queue.popLeft()
+		var next_event = event_queue.shift()
 		if (next_event != undefined) {
 			d = next_event
 		}
