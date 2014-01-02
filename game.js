@@ -195,32 +195,73 @@ $(document).ready(function() {
 		//The snake is now keyboard controllable
 	})
 
-	$(canvas).on('click', function(event) {
-		var x = event.offsetX
-		var y = event.offsetY
+	// $(canvas).on('click', function(event) {
+	// 	var x = event.offsetX
+	// 	var y = event.offsetY
 
-		var last = event_queue[event_queue.length-1] || d
+	var last = event_queue[event_queue.length-1] || d
 
-		if(y/x >= h/w) { // abajo izquierda
-			if(((-h/w)*x + h -y) >= 0) {
-				if(last != 'right') {
-					event_queue.push('left')
-				}
-			} else {
-				if(last != 'up') {
-					event_queue.push('down')
-				}
-			}
-		} else { // arriba derecha
-			if(((-h/w)*x + h -y) >= 0) {
-				if(last != 'down') {
-					event_queue.push('up')
-				}
-			} else {
-				if(last != 'left') {
-					event_queue.push('right')
-				}
-			}
+	// 	if(y/x >= h/w) { // abajo izquierda
+	// 		if(((-h/w)*x + h -y) >= 0) {
+	// 			if(last != 'right') {
+	// 				event_queue.push('left')
+	// 			}
+	// 		} else {
+	// 			if(last != 'up') {
+	// 				event_queue.push('down')
+	// 			}
+	// 		}
+	// 	} else { // arriba derecha
+	// 		if(((-h/w)*x + h -y) >= 0) {
+	// 			if(last != 'down') {
+	// 				event_queue.push('up')
+	// 			}
+	// 		} else {
+	// 			if(last != 'left') {
+	// 				event_queue.push('right')
+	// 			}
+	// 		}
+	// 	}
+	// });
+	$(canvas).hammer().on("swipedown", function(event) {
+		if(last != 'up') {
+			event_queue.push('down')
+		}
+	});
+	$(canvas).hammer().on("swipeup", function(event) {
+		if(last != 'down') {
+			event_queue.push('up')
+		}
+	});
+	$(canvas).hammer().on("swiperight", function(event) {
+		if(last != 'left') {
+			event_queue.push('right')
+		}
+	});
+	$(canvas).hammer().on("swipeleft", function(event) {
+		if(last != 'right') {
+			event_queue.push('left')
+		}
+	});
+
+	$(canvas).hammer().on("dragdown", function(event) {
+		if(last != 'up') {
+			event_queue.push('down')
+		}
+	});
+	$(canvas).hammer().on("dragup", function(event) {
+		if(last != 'down') {
+			event_queue.push('up')
+		}
+	});
+	$(canvas).hammer().on("dragright", function(event) {
+		if(last != 'left') {
+			event_queue.push('right')
+		}
+	});
+	$(canvas).hammer().on("dragleft", function(event) {
+		if(last != 'right') {
+			event_queue.push('left')
 		}
 	});
 
