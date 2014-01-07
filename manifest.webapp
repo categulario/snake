@@ -1,14 +1,16 @@
 {
-	"name": "Snake",
-	"description": "A simple snake game",
-	"launch_path": "/",
-	"icons": {
-		"128": "/img/icon-128.png"
-	},
-	"developer": {
-		"name": "Developingo",
-		"url": "http://bittsys.com"
-	},
-	"default_locale": "es",
-	"fullscreen": "true"
+  "name": "Snake",
+  "description": "Un juego de snake",
+  "launch_path": "/",
+  "icons": {
+    "16": "/img/icon-16.png",
+    "48": "/img/icon-48.png",
+    "128": "/img/icon-128.png"
+  },
+  "developer": {
+    "name": "Developingo",
+    "url": "http://bittsys.com"
+  },
+  "default_locale": "es",
+  "fullscreen": "true"
 }
