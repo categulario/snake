@@ -99,6 +99,13 @@ $(document).ready(function() {
 		//Now if the head of the snake bumps into its body, the game will restart
 		if(nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx, ny, snake_array)) {
 			clearInterval(game_loop)
+			$.magnificPopup.open({
+				items: {
+					src: '<div class="popup">Has perdido!</div>', // can be a HTML string, jQuery object, or CSS selector
+					type: 'inline'
+				},
+				modal: true
+			});
 		}
 
 		//Lets write the code to make the snake eat the food
