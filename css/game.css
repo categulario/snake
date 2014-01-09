@@ -51,14 +51,23 @@ ul.menu .link {
 	font-weight: bold;
 }
 .play {
-	background-image: url(img/play_12x16.png);
+	background-image: url(../img/play_12x16.png);
 }
 .pause {
-	background-image: url(img/pause_12x16.png);
+	background-image: url(../img/pause_12x16.png);
 }
 .reload {
-	background-image: url(img/reload_12x14.png);
+	background-image: url(../img/reload_12x14.png);
 }
 .right {
 	float: right !important;
+}
+.popup {
+	position: relative;
+	background: #FFF;
+	padding: 20px;
+	width: auto;
+	max-width: 500px;
+	margin: 20px auto;
+	border-radius: 10px;
 }
