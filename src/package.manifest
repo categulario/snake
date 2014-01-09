@@ -1,0 +1,9 @@
+{
+    "name": "Snake",
+    "package_path" : "dist/package.zip",
+    "version": "1",
+    "developer": {
+        "name": "Developingo",
+        "url": "http://bittsys.com"
+    }
+}
