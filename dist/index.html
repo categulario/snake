@@ -1,0 +1,16 @@
+<html>
+	<body>
+		<p>Install snake</p>
+		<script>
+			// This URL must be a full url.
+			var manifestUrl = 'http://repos.abraham.dev/snake/dist/package.manifest';
+			var req = navigator.mozApps.installPackage(manifestUrl);
+			req.onsuccess = function() {
+				alert(this.result.origin);
+			};
+			req.onerror = function() {
+				alert(this.error.name);
+			};
+		</script>
+	</body>
+</html>
