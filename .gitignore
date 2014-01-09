@@ -2,3 +2,4 @@
 /Snake.sublime-workspace
 /Snake.sublime-project
 dist/*
+*.py[oc]

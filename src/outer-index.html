@@ -3,7 +3,7 @@
 		<p>Install snake</p>
 		<script>
 			// This URL must be a full url.
-			var manifestUrl = 'http://192.168.1.68/snake/dist/package.manifest';
+			var manifestUrl = 'http://bittsys.com/snake/package.manifest';
 			var req = navigator.mozApps.installPackage(manifestUrl);
 			req.onsuccess = function() {
 				alert(this.result.origin);
