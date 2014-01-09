@@ -1,9 +1,0 @@
-{
-    "name": "Snake",
-    "package_path" : "http://repos.abraham.dev/snake/dist/package.zip",
-    "version": "1",
-    "developer": {
-        "name": "Developingo",
-        "url": "http://bittsys.com"
-    }
-}
