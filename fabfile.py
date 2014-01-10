@@ -1,6 +1,7 @@
 import os
 from fabric.api import local, settings, abort, run, env
 from fabric.operations import put
+from fabric.context_managers import lcd
 
 USER = 'developingo'
 HOST = 'developingo.webfactional.com'
@@ -11,8 +12,9 @@ env.hosts = ['%s@%s' % (USER, HOST)]
 
 def deploy():
     """Do the magic"""
-    local('make clean')
-    local('make')
+    with lcd('src'):
+        local('make clean')
+        local('make')
 
     put(local_path='dist/index.html', remote_path=os.path.join(REMOTE_PATH, 'index.html'))
     put(local_path='dist/package.manifest', remote_path=os.path.join(REMOTE_PATH, 'package.manifest'))
