@@ -101,7 +101,7 @@ $(document).ready(function() {
 			clearInterval(game_loop)
 			$.magnificPopup.open({
 				items: {
-					src: '<div class="popup">Has perdido!</div>', // can be a HTML string, jQuery object, or CSS selector
+					src: '<div class="popup">Has perdido! <a href=''>reiniciar</a></div>', // can be a HTML string, jQuery object, or CSS selector
 					type: 'inline'
 				},
 				modal: true

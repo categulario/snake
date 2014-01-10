@@ -1,7 +1,7 @@
 import os
 from fabric.api import local, settings, abort, run, env
 from fabric.operations import put
-from fabric.context_managers import lcd
+from fabric.context_managers import lcd, cd
 
 USER = 'developingo'
 HOST = 'developingo.webfactional.com'
@@ -19,3 +19,8 @@ def deploy():
     put(local_path='dist/index.html', remote_path=os.path.join(REMOTE_PATH, 'index.html'))
     put(local_path='dist/package.manifest', remote_path=os.path.join(REMOTE_PATH, 'package.manifest'))
     put(local_path='dist/package.zip', remote_path=os.path.join(REMOTE_PATH, 'package.zip'))
+
+    with cd('/home/developingo/webapps/bittsys/snake'):
+        run('cp package.zip play/package.zip')
+        with cd('play'):
+            run('unzip package.zip')
