@@ -138,7 +138,7 @@ $(document).ready(function() {
 		for(var i = 0; i < snake_array.length; i++) {
 			var c = snake_array[i]
 			//Lets paint 10px wide cells
-			paint_cell(c.x, c.y, i)
+			paint_cell(c.x, c.y, i, snake_array.length)
 		}
 
 		//Lets paint the food
@@ -148,16 +148,12 @@ $(document).ready(function() {
 	//Lets first create a generic function to paint cells
 	function paint_cell(x, y, i, len) {
 		if(i===0) {
-			ctx.fillStyle = "#DA4A0E"
+			ctx.fillStyle = "#DA4A0E";
 		} else {
-			ctx.fillStyle = "#2DAA47"
+			var color = Color("#266E35");
+			ctx.fillStyle = color.lighten(.025*i).hexString()
 		}
 		ctx.fillRect(x*cw, y*cw, cw, cw)
-		ctx.fillStyle = '#FFAD8B';
-		ctx.fillRect(x*cw+cw/4, y*cw+cw/4, cw/2, cw/2);
-
-		// ctx.strokeStyle = "#448A52"
-		// ctx.strokeRect(x*cw, y*cw, cw, cw)
 	}
 
 	function check_collision(x, y, array) {
