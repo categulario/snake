@@ -77,7 +77,7 @@ $(document).ready(function() {
 		ctx.font = '20px monospace'
 		//To avoid the snake trail we need to paint the BG on every frame
 		//Lets paint the canvas now
-		ctx.fillStyle = "#C0CFFF"
+		ctx.fillStyle = "#CCF3F8"
 		ctx.fillRect(0, 0, w, h)
 
 		//The movement code for the snake to come here.
@@ -101,7 +101,7 @@ $(document).ready(function() {
 			clearInterval(game_loop)
 			$.magnificPopup.open({
 				items: {
-					src: '<div class="popup">Has perdido! <a href=''>reiniciar</a></div>', // can be a HTML string, jQuery object, or CSS selector
+					src: '<div class="popup">Has perdido! <a href="">reiniciar</a></div>', // can be a HTML string, jQuery object, or CSS selector
 					type: 'inline'
 				},
 				modal: true
@@ -142,20 +142,22 @@ $(document).ready(function() {
 		}
 
 		//Lets paint the food
-		paint_cell(food.x, food.y)
+		paint_cell(food.x, food.y, 0)
 	}
 
 	//Lets first create a generic function to paint cells
-	function paint_cell(x, y, i) {
+	function paint_cell(x, y, i, len) {
 		if(i===0) {
-			ctx.fillStyle = "#C68B52"
+			ctx.fillStyle = "#DA4A0E"
 		} else {
 			ctx.fillStyle = "#2DAA47"
 		}
 		ctx.fillRect(x*cw, y*cw, cw, cw)
+		ctx.fillStyle = '#FFAD8B';
+		ctx.fillRect(x*cw+cw/4, y*cw+cw/4, cw/2, cw/2);
 
-		ctx.strokeStyle = "#448A52"
-		ctx.strokeRect(x*cw, y*cw, cw, cw)
+		// ctx.strokeStyle = "#448A52"
+		// ctx.strokeRect(x*cw, y*cw, cw, cw)
 	}
 
 	function check_collision(x, y, array) {

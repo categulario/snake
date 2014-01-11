@@ -12,6 +12,9 @@ env.hosts = ['%s@%s' % (USER, HOST)]
 
 def deploy():
     """Do the magic"""
+    for i in [16, 32, 48, 60, 90, 120, 128, 256]:
+        local('inkscape -e src/img/icon-%d.png -w %d -h %d src/logo.svg'%((i,)*3))
+
     with lcd('src'):
         local('make clean')
         local('make')
@@ -23,4 +26,4 @@ def deploy():
     with cd('/home/developingo/webapps/bittsys/snake'):
         run('cp package.zip play/package.zip')
         with cd('play'):
-            run('unzip package.zip')
+            run('unzip -o package.zip')
