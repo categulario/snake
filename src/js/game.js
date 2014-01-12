@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 	var colors = [];
 
-	var lightenConstant = 0.009;
+	var lightenConstant = 0.015;
 
 	var i = 0;
 	var lastColor = "#266E35";
