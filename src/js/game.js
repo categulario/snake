@@ -34,7 +34,7 @@ $(document).ready(function() {
 		i++;
 	}
 
-	console.log(colors);
+	var scoreBoard = new DB('snakegame');
 
 	//Lets create the snake now
 	var snake_array; //an array of cells to make up the snake
@@ -50,7 +50,7 @@ $(document).ready(function() {
 		//every 60ms
 		if(typeof game_loop != "undefined")
 			clearInterval(game_loop);
-		game_loop = setInterval(paint, interval);
+		game_loop = setInterval(gameLoop, interval);
 	}
 
 	init();
@@ -84,7 +84,7 @@ $(document).ready(function() {
 	}
 
 	//Lets paint the snake now
-	function paint() {
+	function gameLoop() {
 		// retirar los eventos ahora, si existen
 		var next_event = event_queue.shift();
 		if (next_event !== undefined) {
@@ -116,9 +116,26 @@ $(document).ready(function() {
 		//Now if the head of the snake bumps into its body, the game will restart
 		if(nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx, ny, snake_array)) {
 			clearInterval(game_loop);
+
+			var scores = scoreBoard.get('scores', []);
+			scores.push(score);
+			scores = scores.sort(function(a, b) {
+				return b-a;
+			});
+			if(scores.length > 10) {
+				scores = scores.slice(0, 20);
+			}
+			scoreBoard.set('scores', scores);
+
+			var s = '<ul>';
+			scores.forEach(function(item) {
+				s += '<li>'+item+'</li>';
+			});
+			s += '</ul>';
+
 			$.magnificPopup.open({
 				items: {
-					src: '<div class="popup">Has perdido! <a href="">reiniciar</a></div>', // can be a HTML string, jQuery object, or CSS selector
+					src: '<div class="popup">Has perdido! <strong><a href="">reiniciar</a></strong><br><strong>Puntajes: </strong>'+s+'</div>', // can be a HTML string, jQuery object, or CSS selector
 					type: 'inline'
 				},
 				modal: true
@@ -240,7 +257,7 @@ $(document).ready(function() {
 			$(this).removeClass('pause').addClass('play');
 			running = false;
 		} else {
-			game_loop = setInterval(paint, interval);
+			game_loop = setInterval(gameLoop, interval);
 			$(this).removeClass('play').addClass('pause');
 			running = true;
 		}

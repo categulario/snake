@@ -1,36 +1,34 @@
-function db(_name){
+/**
+ * a local storage wrapper
+ */
+function DB(_name) {
+	if(typeof _name !== 'string' && _name !== '')
+		throw new Error('Must give the name of the database');
 	this.name = _name;
 
-	this.length = function(){
-		return this.data.length;
-	}
+	this.length = function() {
+		var count = 0;
+		for (var i = 0; i < localStorage.length; i++) {
+			if(localStorage.key(i).split(':')[0] === this.name) {
+				count++;
+			}
+		}
+		return count;
+	};
 
-	this.set = function(_data){
-		this.data.push(_data);
-		var data_string = JSON.stringify(this.data);
-		localStorage.setItem(this.name, data_string);
-	}
+	this.set = function(key, _data) {
+		localStorage.setItem(this.name+':'+key, JSON.stringify(_data));
+	};
 
-	this.get = function(){
-		var data_string = localStorage.getItem(this.name);
-		return JSON.parse( data_string );
-	}
+	this.get = function(key, _default) {
+		return localStorage.getItem(this.name+':'+key) !== null ? JSON.parse(localStorage.getItem(this.name+':'+key)) : _default;
+	};
 
 	this.clear = function() {
-		localStorage.setItem(this.name, null);
-	}
-
-	this.data = this.get() || [];
-}
-
-var clases = new db("clases");
-var algo = new db("algo")
-
-if(localStorage){
-	clases.set( { hr:10, nombre:"mate2" } );
-	algo.set( { hr:12, nombre:"espa" } );
-
-	for(var i in clases.data ){
-		console.log(clases.data[i]);
-	}
+		for (var i = 0; i < localStorage.length; i++) {
+			if(localStorage.key(i).split(':')[0] === this.name) {
+				localStorage.removeItem(localStorage.key(i));
+			}
+		}
+	};
 }
